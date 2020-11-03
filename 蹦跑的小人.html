@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奔跑的小人</title>
+    <link rel="stylesheet" href="./xr.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <img src="./images/down-0.png" alt="">
+    </div>
+    <div id="control">
+        <div class="lu">左上</div>
+        <div class="up">向上</div>
+        <div class="rightup">右上</div>
+        <div class="left">向左</div>
+        <div class="stop">停止</div>
+        <div class="right">向右</div>
+        <div class="ld">左下</div>
+        <div class="down">向下</div>
+        <div class="rd">右下</div>
+    </div>
+    <script>
+        var img = document.getElementsByTagName('img')[0];
+        var wrapper = document.getElementsByClassName('wrapper')[0];
+        var control = document.getElementById('control');
+        var timer = null;
+        var speed = 0;
+        var mv = 10;
+        control.addEventListener("click", function (e) {
+            if (e.target.getAttribute("class") == null) {
+                return;
+            }
+            // console.log(e.target.getAttribute("class"))
+            var flage = e.target.getAttribute("class");
+            clearInterval(timer);
+            if (flage == "stop") {
+                console.log(stopimg)
+                clearInterval(timer);
+                img.src = "./images/" + stopimg + "-" + 0 + ".png"
+                return;
+            }
+            stopimg = flage;
+            // console.log(stopimg)
+            timer = setInterval(function () {
+                //自身运动
+                speed++
+                img.src = "./images/" + flage + "-" + speed + ".png"
+                speed = speed % 4;
+                //视口运动
+                switch (flage) {
+                    case "down":
+                        wrapper.style.top = wrapper.offsetTop + mv + 'px';
+                        break;
+                    case 'up':
+                        wrapper.style.top = wrapper.offsetTop - mv + 'px';
+                        break;
+                    case "left":
+                        wrapper.style.left = wrapper.offsetLeft - mv + 'px';
+                        break;
+                    case 'right':
+                        wrapper.style.left = wrapper.offsetLeft + mv + 'px';
+                        break;
+                    case 'lu':
+                        wrapper.style.top = wrapper.offsetTop - mv + 'px';
+                        wrapper.style.left = wrapper.offsetLeft - mv + 'px';
+                        break;
+                    case 'rightup':
+                        wrapper.style.left = wrapper.offsetLeft + mv + 'px';
+                        wrapper.style.top = wrapper.offsetTop - mv + 'px';
+                        break;
+                    case 'ld':
+                        wrapper.style.top = wrapper.offsetTop + mv + 'px';
+                        wrapper.style.left = wrapper.offsetLeft - mv + 'px';
+                        break;
+                    case 'rd':
+                        wrapper.style.top = wrapper.offsetTop + mv + 'px';
+                        wrapper.style.left = wrapper.offsetLeft + mv + 'px';
+                        break;
+                }
+            }, 200)
+        })
+    </script>
+</body>
+
+</html>
